@@ -1,0 +1,133 @@
+/* Mobile-first: base styles target a phone, nothing here needs a media query yet */
+:root {
+  --bg: #fdf3f0;
+  --ink: #3a2a2a;
+  --accent: #e8788a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, sans-serif;
+}
+
+.screen {
+  min-height: 100dvh; /* dvh, not vh, so phone address bars don't cut it off */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.center { align-items: center; justify-content: center; text-align: center; }
+
+.title { font-size: 2rem; margin: 0; }
+.tagline { margin: 0; opacity: 0.7; }
+
+.btn {
+  min-width: 120px;
+  min-height: 48px; /* comfortable thumb target */
+  padding: 0 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.row { display: flex; gap: 12px; }
+.status { margin: 0; }
+.error { max-width: 320px; }
+
+/* Camera box keeps a 4:3 shape at any screen width */
+.camera {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.camera video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror, like a real mirror */
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 6rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0.9; }
+
+/* Editor: single column on phones, strip + controls side by side on desktop */
+.editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+.strip-canvas {
+  width: 100%;
+  max-width: 260px;
+  height: auto; /* keeps the strip's ratio while the pixels stay full size */
+  border-radius: 4px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+.controls {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+.controls h2 { font-size: 1rem; margin: 0 0 8px; }
+
+.swatches, .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch {
+  width: 44px; /* 44px touch target */
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.swatch.active { border-color: var(--ink); }
+.swatch-picker {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.chip {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.chip.active { background: var(--ink); color: #fff; }
+
+@media (min-width: 900px) {
+  .editor { flex-direction: row; align-items: flex-start; justify-content: center; gap: 48px; }
+  .strip-canvas { max-width: 300px; }
+}
